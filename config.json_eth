@@ -1,0 +1,57 @@
+{
+    "max_open_trades": 8,
+    "stake_currency": "ETH",
+    "stake_amount": 0.4,
+    "dry_run": false,
+    "minimal_roi": {
+        "0": 0.1,
+        "20": 0.08,
+        "30": 0.045,
+        "60": 0.03,
+        "90":  0.02
+    },
+    "stoploss": -0.018,
+    "bid_strategy": {
+        "ask_last_balance": 0.0
+    },
+    "exchange": {
+        "name": "bittrex",
+        "enabled": true,
+        "key":"a4e538f9131b4b97be1bedee1c17144e",
+        "secret":"1007bcc301444d09b976c16df253a67e",
+        "pair_whitelist": [
+          "ETH_BCC",
+          "ETH_XRP",
+          "ETH_LTC",
+          "ETH_ADA",
+          "ETH_DASH",
+          "ETH_QTUM",
+          "ETH_XMR",
+          "ETH_NEO",
+          "ETH_XLM",
+          "ETH_BTG",
+          "ETH_OMG",
+          "ETH_SNT",
+          "ETH_ETC",
+          "ETH_SC",
+          "ETH_CVC",
+          "ETH_MCO",
+          "ETH_QRL",
+          "ETH_GUP",
+          "ETH_RCN",
+          "ETH_SALT"
+        ]
+    },
+    "experimental": {
+        "use_sell_signal": true
+    },
+    "telegram": {
+        "enabled": true,
+        "token": "459322319:AAFU5_wa3J4nyKLvovRFmn5e0u51Q1wqHPY",
+        "chat_id": "498115783"
+    },
+    "initial_state": "running",
+    "internals": {
+        "process_throttle_secs": 5
+    }
+}
