@@ -78,14 +78,8 @@ def populate_buy_trend(dataframe: DataFrame) -> DataFrame:
     """
     dataframe.loc[
         (
-            (dataframe['rsi'] < 35) &
-            (dataframe['fastd'] < 35) &
-            (dataframe['adx'] > 30) &
-            (dataframe['plus_di'] > 0.5)
-        ) |
-        (
-            (dataframe['adx'] > 65) &
-            (dataframe['plus_di'] > 0.5)
+            (dataframe['rsi'] < 30) &
+            (dataframe['blower'] > dataframe['close'])
         ),
         'buy'] = 1
 
