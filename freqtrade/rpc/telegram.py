@@ -234,7 +234,7 @@ def _daily(bot: Bot, update: Update) -> None:
         send_msg('*Daily [n]:* `must be an integer greater than 0`', bot=bot)
         return
 
-    for day in range(0, timescale):
+       for day in range(0, timescale):
         profitday = today - timedelta(days=day)
         trades = Trade.query \
             .filter(Trade.is_open.is_(False)) \
@@ -243,40 +243,41 @@ def _daily(bot: Bot, update: Update) -> None:
             .order_by(Trade.close_date)\
             .all()
         curdayprofit = sum(trade.calc_profit() for trade in trades)
-        profit_days[profitday] = {
+        _profitday = profitday.strftime("%d-%m")
+        profit_days[_profitday] = {
             'amount': format(curdayprofit, '.8f'),
             'trades': len(trades)
         }
 
     stats = [
-        [
+         [
             key,
-            '{value:.8f} {symbol}'.format(
-                value=float(value['amount']),
+            '{value:.4f}'.format(
+                value=float(value['amount'])*1000,
                 symbol=_CONF['stake_currency']
             ),
-            '{value:.3f} {symbol}'.format(
+            '{value:0.2f}'.format(
                 value=_FIAT_CONVERT.convert_amount(
                     value['amount'],
                     _CONF['stake_currency'],
                     _CONF['fiat_display_currency']
-                ),
-                symbol=_CONF['fiat_display_currency']
+                )
             ),
-            '{value} trade{s}'.format(value=value['trades'], s='' if value['trades'] < 2 else 's'),
+            '{value}'.format(value=value['trades']),
         ]
-        for key, value in profit_days.items()
+   for key, value in profit_days.items()
     ]
+
     stats = tabulate(stats,
                      headers=[
                          'Day',
-                         'Profit {}'.format(_CONF['stake_currency']),
-                         'Profit {}'.format(_CONF['fiat_display_currency']),
-                         '# Trades'
+                         '\u0394k{}'.format(_CONF['stake_currency']),
+                         format(_CONF['fiat_display_currency']),
+                         '#'
                      ],
-                     tablefmt='simple')
+                     tablefmt='simple', numalign='left', stralign='left')
 
-    message = '<b>Daily Profit over the last {} days</b>:\n<pre>{}</pre>'.format(timescale, stats)
+    message = '<b>Daily Profit over last {} days</b>:\n<pre>{}</pre>'.format(timescale, stats)
     send_msg(message, bot=bot, parse_mode=ParseMode.HTML)
 
 
